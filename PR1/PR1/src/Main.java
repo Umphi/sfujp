@@ -65,13 +65,14 @@ public class Main {
         return result.toString();
     }
 
-    public void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        Main program = new Main();
 
         while (true) {
             System.out.print("\n".repeat(50));
 
-            System.out.print("Текущий текст: %s\nСтрочная кириллица: %d\nПрописная кириллица: %d\nСтрочная латиница: %d\nПрописная латиница: %d\nЗнаков препинания: %d\nПробелов: %d\n 1. Ввести новый текст вручную\n 2. Сгенерировать случайный текст\n 3. Описание программы\n 4. Выход\n".formatted(this.getText(), this.getLowerCyrillic(), this.getUpperCyrillic(), this.getLowerLatin(), this.getUpperLatin(), this.getPunctuationCount(), this.getSpacesCount()));
+            System.out.print("Текущий текст: %s\nСтрочная кириллица: %d\nПрописная кириллица: %d\nСтрочная латиница: %d\nПрописная латиница: %d\nЗнаков препинания: %d\nПробелов: %d\n 1. Ввести новый текст вручную\n 2. Сгенерировать случайный текст\n 3. Описание программы\n 4. Выход\n".formatted(program.getText(), program.getLowerCyrillic(), program.getUpperCyrillic(), program.getLowerLatin(), program.getUpperLatin(), program.getPunctuationCount(), program.getSpacesCount()));
             
             String input = "";
 
@@ -83,10 +84,10 @@ public class Main {
             switch(input) {
                 case "1":
                     System.out.print("Введите текст: ");
-                    this.setText(br.readLine());
+                    program.setText(br.readLine());
                     break;
                 case "2":
-                    this.setText(generateRandomString(100));
+                    program.setText(generateRandomString(100));
                     break;
                 case "3":
                     System.out.print("Данная программа принимает текст в качестве входных данных (пользовательский ввод, либо генерация случайной последовательности). Результатом работы программы является вывод количества строчных и прописных букв для каждого из алфавитов, а также числа знаков препинания и пробелов.\nПрограмму выполнил студент группы ЗКИ25-18Б Юркевич И.А.\nДля продолжения нажмите Enter...");
