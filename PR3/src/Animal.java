@@ -47,7 +47,7 @@ public class Animal {
     public String toString() {
         return "Animal{" +
                 "binominalName='" + binominalName + '\'' +
-                ", nameTakenYear=" + nameTakenYear +
+                ", nameTakenYear=" + nameTakenYear.getYear() +
                 '}';
     }
 }
@@ -101,7 +101,7 @@ class Fish extends Animal {
     public String toString() {
         return "Fish{" +
                 "binominalName='" + binominalName + '\'' +
-                ", nameTakenYear=" + nameTakenYear +
+                ", nameTakenYear=" + nameTakenYear.getYear() +
                 ", finCount=" + finCount +
                 ", waterType='" + waterType + '\'' +
                 '}';
@@ -157,7 +157,7 @@ class Reptile extends Animal {
     public String toString() {
         return "Reptile{" +
                 "binominalName='" + binominalName + '\'' +
-                ", nameTakenYear=" + nameTakenYear +
+                ", nameTakenYear=" + nameTakenYear.getYear() +
                 ", bodyTemperature=" + bodyTemperature +
                 ", scaleType='" + scaleType + '\'' +
                 '}';
@@ -213,7 +213,7 @@ class Mammal extends Animal {
     public String toString() {
         return "Mammal{" +
                 "binominalName='" + binominalName + '\'' +
-                ", nameTakenYear=" + nameTakenYear +
+                ", nameTakenYear=" + nameTakenYear.getYear() +
                 ", averageHeartRate=" + averageHeartRate +
                 ", furType='" + furType + '\'' +
                 '}';
@@ -270,7 +270,7 @@ class Carnivora extends Mammal {
     public String toString() {
         return "Carnivora{" +
                 "binominalName='" + binominalName + '\'' +
-                ", nameTakenYear=" + nameTakenYear +
+                ", nameTakenYear=" + nameTakenYear.getYear() +
                 ", averageHeartRate=" + averageHeartRate +
                 ", furType='" + furType + '\'' +
                 ", biteForce=" + biteForce +
