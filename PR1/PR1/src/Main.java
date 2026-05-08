@@ -3,14 +3,15 @@ import java.io.InputStreamReader;
 import java.util.Random;
 
 public class Main {
-    String inputText = "";
+    private String inputText = "";
 
-    int lowercaseCountCyrillic = 0;
-    int uppercaseCountCyrillic = 0;
-    int lowercaseCountLatin = 0;
-    int uppercaseCountLatin = 0;
-    int punctuationMarksCount = 0;
-    int spacesCount = 0;
+    private boolean isUpdated = false;
+    private int lowercaseCountCyrillic = 0;
+    private int uppercaseCountCyrillic = 0;
+    private int lowercaseCountLatin = 0;
+    private int uppercaseCountLatin = 0;
+    private int punctuationMarksCount = 0;
+    private int spacesCount = 0;
 
     public String getText() {
         return this.inputText;
@@ -19,12 +20,13 @@ public class Main {
     public void setText(String text) {
         this.inputText = text;
 
-        this.lowercaseCountCyrillic = (int) text.chars().filter(Character::isAlphabetic).filter(c -> Character.UnicodeBlock.of(c) == Character.UnicodeBlock.CYRILLIC).filter(c -> Character.isLowerCase(c)).count();
-        this.uppercaseCountCyrillic = (int) text.chars().filter(Character::isAlphabetic).filter(c -> Character.UnicodeBlock.of(c) == Character.UnicodeBlock.CYRILLIC).filter(c -> Character.isUpperCase(c)).count();
-        this.lowercaseCountLatin = (int) text.chars().filter(Character::isAlphabetic).filter(c -> Character.UnicodeBlock.of(c) == Character.UnicodeBlock.BASIC_LATIN).filter(c -> Character.isLowerCase(c)).count();
-        this.uppercaseCountLatin = (int) text.chars().filter(Character::isAlphabetic).filter(c -> Character.UnicodeBlock.of(c) == Character.UnicodeBlock.BASIC_LATIN).filter(c -> Character.isUpperCase(c)).count();
-        this.punctuationMarksCount = (int) text.chars().filter(c -> ".,!?;:-()\"'«»…".indexOf(c) != -1).count();
-        this.spacesCount = (int) text.chars().filter(Character::isWhitespace).count();
+        this.isUpdated = false;
+        this.lowercaseCountCyrillic = 0;
+        this.uppercaseCountCyrillic = 0;
+        this.lowercaseCountLatin = 0;
+        this.uppercaseCountLatin = 0;
+        this.punctuationMarksCount = 0;
+        this.spacesCount = 0;
     }
 
     public int getLowerCyrillic() {
@@ -45,7 +47,24 @@ public class Main {
     public int getSpacesCount() {
         return this.spacesCount;
     }
+    
+    public boolean getIsUpdated() {
+        return this.isUpdated;
+    }
 
+    public void countParameters() {
+        this.lowercaseCountCyrillic = (int) this.inputText.chars().filter(Character::isAlphabetic).filter(c -> Character.UnicodeBlock.of(c) == Character.UnicodeBlock.CYRILLIC).filter(c -> Character.isLowerCase(c)).count();
+        this.uppercaseCountCyrillic = (int) this.inputText.chars().filter(Character::isAlphabetic).filter(c -> Character.UnicodeBlock.of(c) == Character.UnicodeBlock.CYRILLIC).filter(c -> Character.isUpperCase(c)).count();
+        this.lowercaseCountLatin = (int) this.inputText.chars().filter(Character::isAlphabetic).filter(c -> Character.UnicodeBlock.of(c) == Character.UnicodeBlock.BASIC_LATIN).filter(c -> Character.isLowerCase(c)).count();
+        this.uppercaseCountLatin = (int) this.inputText.chars().filter(Character::isAlphabetic).filter(c -> Character.UnicodeBlock.of(c) == Character.UnicodeBlock.BASIC_LATIN).filter(c -> Character.isUpperCase(c)).count();
+        this.punctuationMarksCount = (int) this.inputText.chars().filter(c -> ".,!?;:-()\"'«»…".indexOf(c) != -1).count();
+        this.spacesCount = (int) this.inputText.chars().filter(Character::isWhitespace).count();
+
+        if (!this.inputText.isBlank()) {
+            this.isUpdated = true;
+        }
+    }
+    
     public static String generateRandomString(int maxLength) {
         Random random = new Random();
         int length = random.nextInt(maxLength + 1);
@@ -72,7 +91,7 @@ public class Main {
         while (true) {
             System.out.print("\n".repeat(50));
 
-            System.out.print("Текущий текст: %s\nСтрочная кириллица: %d\nПрописная кириллица: %d\nСтрочная латиница: %d\nПрописная латиница: %d\nЗнаков препинания: %d\nПробелов: %d\n 1. Ввести новый текст вручную\n 2. Сгенерировать случайный текст\n 3. Описание программы\n 4. Выход\n".formatted(program.getText(), program.getLowerCyrillic(), program.getUpperCyrillic(), program.getLowerLatin(), program.getUpperLatin(), program.getPunctuationCount(), program.getSpacesCount()));
+            System.out.print("Текущий текст: %s\n 1. Ввести текст\n 2. Выполнить подсчет\n 3. Вывести результат\n 4. Выход\n".formatted(program.getText()));
             
             String input = "";
 
@@ -83,14 +102,36 @@ public class Main {
             
             switch(input) {
                 case "1":
-                    System.out.print("Введите текст: ");
-                    program.setText(br.readLine());
+                    String selectInputType = " ";
+                    while ("123".indexOf(selectInputType.charAt(0)) == -1)
+                    {
+                        System.out.print("\n".repeat(50));
+                        System.out.print("1. Ввести текст вручную\n2. Ввести случайный текст\n3. Вернуться в меню\nВыберите нужный пункт: ");
+                        selectInputType = br.readLine() + " ";
+                    }
+                    switch(selectInputType.charAt(0)) {
+                        case '1':
+                            System.out.print("Введите текст: ");
+                            program.setText(br.readLine());
+                            break;
+                        case '2':
+                            program.setText(generateRandomString(100));
+                            break;
+                        case '3':
+                            break;
+                    }
                     break;
                 case "2":
-                    program.setText(generateRandomString(100));
+                    program.countParameters();
                     break;
                 case "3":
-                    System.out.print("Данная программа принимает текст в качестве входных данных (пользовательский ввод, либо генерация случайной последовательности). Результатом работы программы является вывод количества строчных и прописных букв для каждого из алфавитов, а также числа знаков препинания и пробелов.\nПрограмму выполнил студент группы ЗКИ25-18Б Юркевич И.А.\nДля продолжения нажмите Enter...");
+                    System.out.print("\n".repeat(50));
+                    if (program.getIsUpdated()) {
+                        System.out.print("Строчная кириллица: %d\nПрописная кириллица: %d\nСтрочная латиница: %d\nПрописная латиница: %d\nЗнаков препинания: %d\nПробелов: %d\n".formatted(program.getLowerCyrillic(), program.getUpperCyrillic(), program.getLowerLatin(), program.getUpperLatin(), program.getPunctuationCount(), program.getSpacesCount()));
+                    } else {
+                        System.out.println("Алгоритм еще не был выполнен, выберите пункт 2 в меню");
+                    }
+                    System.out.println("Нажмите Enter для продолжения...");
                     br.readLine();
                     break;
                 case "4":
