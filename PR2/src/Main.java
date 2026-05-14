@@ -4,23 +4,36 @@ import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+/**
+ * Главный класс приложения
+ * Демонстранция работы с классом Building
+ */
 public class Main {
+    /** Главный метод приложения.
+     * @param args аргументы командной строки (не используются)
+     */
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         ArrayList<Building> buildings = new ArrayList<>();
 
-        while (true) { 
+        while (true) {
             System.out.print("\n".repeat(50));
-            System.out.print(("Практическая работа 2\nНа данный момент в программу внесено %d построек\n 1. Добавить постройку без данных \n 2. Добавить постройку с внесением параметров \n 3. Редактирование данных \n 4. Вывод информации о постройках \n 5. Сортировка \n 6. Выход\n").formatted(buildings.size()));
+            System.out.println("Практическая работа 2");
+            System.out.println("На данный момент в программу внесено %d построек".formatted(buildings.size()));
+            System.out.print(" 1. Добавить постройку без данных \n" 
+                            + " 2. Добавить постройку с внесением параметров \n"
+                            + " 3. Редактирование данных \n"
+                            + " 4. Вывод информации о постройках \n"
+                            + " 5. Сортировка \n"
+                            + " 6. Выход\n"
+            );
 
             String input = " ";
-            while ("123456".indexOf(input.charAt(0)) == -1)
-            {
+            while ("123456".indexOf(input.charAt(0)) == -1) {
                 input = br.readLine() + " ";
             }
 
-            switch (input.charAt(0)) 
-            {
+            switch (input.charAt(0)) {
                 case '1':
                     buildings.add(new Building());
                     break;
@@ -29,37 +42,27 @@ public class Main {
                     String address = br.readLine();
                     int year = 0;
                     boolean check = false;
-                    while(!check)
-                    {
+                    while (!check) {
                         System.out.print("Введите год постройки: ");
-                        try
-                        {
+                        try {
                             year = Integer.parseInt(br.readLine());
-                            if (year > 1500 && year <= LocalDate.now().plusYears(5).getYear())
-                            {
+                            if (year > 1500 && year <= LocalDate.now().plusYears(5).getYear()) {
                                 check = true;
                             }
-                        }
-                        catch (NumberFormatException _) 
-                        {
+                        } catch (NumberFormatException e) {
                             System.out.println("Неверный ввод, попробуйте еще раз");
                         }
                     }
                     int numberOfFloors = 0;
                     check = false;
-                    while (!check)
-                    {
+                    while (!check) {
                         System.out.print("Введите количество этажей в здании: ");
-                        try
-                        {
+                        try {
                             numberOfFloors = Integer.parseInt(br.readLine());
-                            if (numberOfFloors >= 1 && numberOfFloors <= 150)
-                            {
+                            if (numberOfFloors >= 1 && numberOfFloors <= 150) {
                                 check = true;
                             }
-                        }
-                        catch (NumberFormatException _)
-                        {
+                        } catch (NumberFormatException e) {
                             System.out.println("Неверный ввод, попробуйте еще раз");
                         }
                     }
@@ -67,58 +70,42 @@ public class Main {
                     String typeOfBuilding = br.readLine();
                     int numberOfRooms = 0;
                     check = false;
-                    while (!check)
-                    {
+                    while (!check) {
                         System.out.print("Введите количество помещений в здании: ");
-                        try
-                        {
+                        try {
                             numberOfRooms = Integer.parseInt(br.readLine());
-                            if (numberOfRooms >= 1 && numberOfRooms <= 10000)
-                            {
+                            if (numberOfRooms >= 1 && numberOfRooms <= 10000) {
                                 check = true;
                             }
-                        }
-                        catch (NumberFormatException _)
-                        {
+                        } catch (NumberFormatException e) {
                             System.out.println("Неверный ввод, попробуйте еще раз");
                         }
                     }
                     boolean isUnfit = false;
                     check = false;
-                    while (!check)
-                    {
+                    while (!check) {
                         System.out.print("Введите y, если здание признано аварийным, n - если не является аварийным: ");
                         String unfitInput = br.readLine();
-                        if (unfitInput.equals("y"))
-                        {
+                        if (unfitInput.equals("y")) {
                             isUnfit = true;
                             check = true;
-                        }
-                        else if (unfitInput.equals("n"))
-                        {
+                        } else if (unfitInput.equals("n")) {
                             isUnfit = false;
                             check = true;
-                        }
-                        else
-                        {
+                        } else {
                             System.out.println("Неверный ввод, попробуйте еще раз");
                         }
                     }
                     float areaOfRooms = 0f;
                     check = false;
-                    while (!check)
-                    {
+                    while (!check) {
                         System.out.print("Введите общую площадь помещений в здании: ");
-                        try
-                        {
+                        try {
                             areaOfRooms = Float.parseFloat(br.readLine());
-                            if (areaOfRooms >= 1f && areaOfRooms <= 1000000f)
-                            {
+                            if (areaOfRooms >= 1f && areaOfRooms <= 1000000f) {
                                 check = true;
                             }
-                        }
-                        catch (NumberFormatException _)
-                        {
+                        } catch (NumberFormatException e) {
                             System.out.println("Неверный ввод, попробуйте еще раз");
                         }
                     }
@@ -126,52 +113,44 @@ public class Main {
                     break;
                 case '3':
                     System.out.print("\n".repeat(50));
-                    for (Building building : buildings) {
-                        System.out.println("%d. %s".formatted(buildings.indexOf(building), building.getAddress()));
+                    for (int i = 0; i < buildings.size(); i++) {
+                        System.out.println("%d. %s".formatted(i, buildings.get(i).getAddress()));
                     }
                     check = false;
                     int buildingIndex = -1;
-                    while (!check)
-                    {
+                    while (!check) {
                         System.out.println("Введите номер постройки для редактирования или оставьте поле пустым для выхода... ");
-                        try
-                        {
+                        try {
                             String buildingInput = br.readLine();
-                            if (buildingInput.isBlank())
-                            {
+                            if (buildingInput.isBlank()) {
                                 break;
                             }
                             buildingIndex = Integer.parseInt(buildingInput);
-                            if (buildingIndex >= 0 && buildingIndex < buildings.size())
-                            {
+                            if (buildingIndex >= 0 && buildingIndex < buildings.size()) {
                                 check = true;
                             }
-                        }
-                        catch (NumberFormatException e) {
+                        } catch (NumberFormatException e) {
                             System.out.println("Неверный ввод... ");
                         }
                     }
-                    if (check)
-                    {
+                    if (check) {
                         Building building = buildings.get(buildingIndex);
-                        Boolean checkStop = true;
+                        boolean checkStop = true;
                         while (checkStop) {
                             System.out.print("\n".repeat(50));
                             System.out.println("1. Адрес: " + building.getAddress());
-                            System.out.println("2. Год постройки: " + building.getYearOfConstructiion());
+                            System.out.println("2. Год постройки: " + building.getYearOfConstruction());
                             System.out.println("3. Этажей: " + building.getNumberOfFloors());
                             System.out.println("4. Тип постройки: " + building.getBuildingType());
                             System.out.println("5. Помещений: " + building.getNumberOfRooms());
-                            System.out.println("6. Аварийность: " + (building.getIsUnfit() ? "+" : "-"));
+                            System.out.println("6. Аварийность: " + (building.isUnfit() ? "+" : "-"));
                             System.out.println("7. Общая площадь помещений: " + building.getAreaOfRooms());
                             System.out.print("Введите номер параметра для редактирования или c для выхода: ");
                             String chosenParameter = ".";
-                            while(!chosenParameter.isBlank() && "1234567c".indexOf(chosenParameter.charAt(0)) == -1)
-                            {
+                            while(!chosenParameter.isBlank() && "1234567c".indexOf(chosenParameter.charAt(0)) == -1) {
                                 chosenParameter = br.readLine();
                             }
-                            switch (chosenParameter)
-                            {
+                            switch (chosenParameter) {
                                 case "1":
                                     System.out.print("Введите новый адрес (текущий - %s): ".formatted(building.getAddress()));
                                     building.setAddress(br.readLine());
@@ -179,19 +158,14 @@ public class Main {
                                 case "2":
                                     year = 0;
                                     check = false;
-                                    while(!check)
-                                    {
+                                    while (!check) {
                                         System.out.print("Введите год постройки: ");
-                                        try
-                                        {
+                                        try {
                                             year = Integer.parseInt(br.readLine());
-                                            if (year > 1500 && year <= LocalDate.now().plusYears(5).getYear())
-                                            {
+                                            if (year > 1500 && year <= LocalDate.now().plusYears(5).getYear()) {
                                                 check = true;
                                             }
-                                        }
-                                        catch (NumberFormatException _) 
-                                        {
+                                        } catch (NumberFormatException e) {
                                             System.out.println("Неверный ввод, попробуйте еще раз");
                                         }
                                     }
@@ -200,19 +174,14 @@ public class Main {
                                 case "3":
                                     numberOfFloors = 0;
                                     check = false;
-                                    while (!check)
-                                    {
+                                    while (!check) {
                                         System.out.print("Введите количество этажей в здании: ");
-                                        try
-                                        {
+                                        try {
                                             numberOfFloors = Integer.parseInt(br.readLine());
-                                            if (numberOfFloors >= 1 && numberOfFloors <= 150)
-                                            {
+                                            if (numberOfFloors >= 1 && numberOfFloors <= 150) {
                                                 check = true;
                                             }
-                                        }
-                                        catch (NumberFormatException _)
-                                        {
+                                        } catch (NumberFormatException e) {
                                             System.out.println("Неверный ввод, попробуйте еще раз");
                                         }
                                     }
@@ -225,43 +194,33 @@ public class Main {
                                 case "5":
                                     numberOfRooms = 0;
                                     check = false;
-                                    while (!check)
-                                    {
+                                    while (!check) {
                                         System.out.print("Введите количество помещений в здании: ");
-                                        try
-                                        {
+                                        try {
                                             numberOfRooms = Integer.parseInt(br.readLine());
-                                            if (numberOfRooms >= 1 && numberOfRooms <= 10000)
-                                            {
+                                            if (numberOfRooms >= 1 && numberOfRooms <= 10000) {
                                                 check = true;
                                             }
-                                        }
-                                        catch (NumberFormatException _)
-                                        {
+                                        } catch (NumberFormatException e) {
                                             System.out.println("Неверный ввод, попробуйте еще раз");
                                         }
                                     }
                                     building.setNumberOfRooms(numberOfRooms);
                                     break;
                                 case "6":
-                                    building.setIsUnfit(!building.getIsUnfit());
+                                    building.setIsUnfit(!building.isUnfit());
                                     break;
                                 case "7":
                                     areaOfRooms = 0f;
                                     check = false;
-                                    while (!check)
-                                    {
+                                    while (!check) {
                                         System.out.print("Введите общую площадь помещений в здании: ");
-                                        try
-                                        {
+                                        try {
                                             areaOfRooms = Float.parseFloat(br.readLine());
-                                            if (areaOfRooms >= 1f && areaOfRooms <= 1000000f)
-                                            {
+                                            if (areaOfRooms >= 1f && areaOfRooms <= 1000000f) {
                                                 check = true;
                                             }
-                                        }
-                                        catch (NumberFormatException _)
-                                        {
+                                        } catch (NumberFormatException e) {
                                             System.out.println("Неверный ввод, попробуйте еще раз");
                                         }
                                     }
@@ -269,7 +228,6 @@ public class Main {
                                     break;
                                 case "c":
                                     checkStop = false;
-
                                     break;
                                 default:
                                     break;
@@ -279,17 +237,19 @@ public class Main {
                     break;
                 case '4':
                     System.out.print("\n".repeat(50));
-                    System.out.println("  №  |            адрес              | год постройки | этажи |     тип постройки     |помещений|аварийность|площадь помещений|средняя площадь каждого");
-                    for (Building building : buildings) {
-                        System.out.print(substringOut(buildings.indexOf(building), 5) + "|");
-                        System.out.print(substringOut(building.getAddress(), 31) + "|");
-                        System.out.print(substringOut(building.getYearOfConstructiion(), 15) + "|");
-                        System.out.print(substringOut(building.getNumberOfFloors(), 7) + "|");
-                        System.out.print(substringOut(building.getBuildingType(), 23) + "|");
-                        System.out.print(substringOut(building.getNumberOfRooms(), 9) + "|");
-                        System.out.print(building.getIsUnfit() ? "     +     |" : "     -     |");
-                        System.out.print(substringOut(building.getAreaOfRooms(), 17) + "|");
-                        System.out.print(substringOut(building.AverageRoomSize(), 22) + "\n");
+                    System.out.println("  №  |            адрес              | год постройки | этажи |"
+                                        + "     тип постройки     |помещений|аварийность|площадь помещений|"
+                                        + "средняя площадь каждого");
+                    for (int i = 0; i < buildings.size(); i++) {
+                        System.out.print(padOrTrim(i, 5) + "|");
+                        System.out.print(padOrTrim(buildings.get(i).getAddress(), 31) + "|");
+                        System.out.print(padOrTrim(buildings.get(i).getYearOfConstruction(), 15) + "|");
+                        System.out.print(padOrTrim(buildings.get(i).getNumberOfFloors(), 7) + "|");
+                        System.out.print(padOrTrim(buildings.get(i).getBuildingType(), 23) + "|");
+                        System.out.print(padOrTrim(buildings.get(i).getNumberOfRooms(), 9) + "|");
+                        System.out.print(buildings.get(i).isUnfit() ? "     +     |" : "     -     |");
+                        System.out.print(padOrTrim(buildings.get(i).getAreaOfRooms(), 17) + "|");
+                        System.out.print(padOrTrim(buildings.get(i).averageRoomSize(), 22) + "\n");
                     }
                     System.out.println("Нажмите Enter для продолжения... ");
                     br.readLine();
@@ -307,12 +267,12 @@ public class Main {
                     System.out.println("8. По средней площади помещения");
                     String sortChoice = br.readLine();
                     
-                    switch(sortChoice) {
+                    switch (sortChoice) {
                         case "1":
                             buildings.sort((b1, b2) -> b1.getAddress().compareTo(b2.getAddress()));
                             break;
                         case "2":
-                            buildings.sort((b1, b2) -> Integer.compare(b1.getYearOfConstructiion(), b2.getYearOfConstructiion()));
+                            buildings.sort((b1, b2) -> Integer.compare(b1.getYearOfConstruction(), b2.getYearOfConstruction()));
                             break;
                         case "3":
                             buildings.sort((b1, b2) -> Integer.compare(b1.getNumberOfFloors(), b2.getNumberOfFloors()));
@@ -324,13 +284,13 @@ public class Main {
                             buildings.sort((b1, b2) -> Integer.compare(b1.getNumberOfRooms(), b2.getNumberOfRooms()));
                             break;
                         case "6":
-                            buildings.sort((b1, b2) -> Boolean.compare(b1.getIsUnfit(), b2.getIsUnfit()));
+                            buildings.sort((b1, b2) -> Boolean.compare(b1.isUnfit(), b2.isUnfit()));
                             break;
                         case "7":
                             buildings.sort((b1, b2) -> Float.compare(b1.getAreaOfRooms(), b2.getAreaOfRooms()));
                             break;
                         case "8":
-                            buildings.sort((b1, b2) -> Float.compare(b1.AverageRoomSize(), b2.AverageRoomSize()));
+                            buildings.sort((b1, b2) -> Float.compare(b1.averageRoomSize(), b2.averageRoomSize()));
                             break;
                         default:
                             System.out.println("Неверный выбор!");
@@ -342,41 +302,44 @@ public class Main {
         }
     }
 
-    public static String substringOut(String input, int length)
-    {
-        if (input.length() >= length)
-        {
-            return input.substring(0, length-1);
+    /**
+     * Выводит строку строго определенной длины
+     * 
+     * @param input текст для вывода
+     * @param length длина строки
+     */
+    public static String padOrTrim(String input, int length) {
+        if (input.length() >= length) {
+            return input.substring(0, length - 1);
         }
-        else
-        {
-            return input + " ".repeat(length-input.length());
-        }
+        return input + " ".repeat(length - input.length());
     }
 
-    public static String substringOut(Integer iinput, int length)
-    {
+    /**
+     * Выводит строку строго определенной длины из int
+     * 
+     * @param iinput число для вывода
+     * @param length длина строки
+     */
+    public static String padOrTrim(Integer iinput, int length) {
         String input = iinput.toString();
-        if (input.length() >= length)
-        {
-            return input.substring(0, length-1);
+        if (input.length() >= length) {
+            return input.substring(0, length - 1);
         }
-        else
-        {
-            return input + " ".repeat(length-input.length());
-        }
+        return input + " ".repeat(length - input.length());
     }
 
-    public static String substringOut(Float finput, int length)
-    {
+    /**
+     * Выводит строку строго определенной длины из float
+     * 
+     * @param finput число для вывода
+     * @param length длина строки
+     */
+    public static String padOrTrim(Float finput, int length) {
         String input = finput.toString();
-        if (input.length() >= length)
-        {
-            return input.substring(0, length-1);
+        if (input.length() >= length) {
+            return input.substring(0, length - 1);
         }
-        else
-        {
-            return input + " ".repeat(length-input.length());
-        }
+        return input + " ".repeat(length - input.length());
     }
 }
