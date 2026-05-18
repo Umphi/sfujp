@@ -96,7 +96,7 @@ public class Main {
                 isUnfit = true;
                 check = true;
                 break;
-              case "b":
+              case "n":
                 isUnfit = false;
                 check = true;
                 break;
